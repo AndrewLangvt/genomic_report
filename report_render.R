@@ -20,4 +20,4 @@ if (args_len == 5) {
 }
 
 # Render the report
-render(report, output_dir=location, output_file='report.pdf', knit_root_dir=location)
+render(report, output_dir=location, output_file='report.pdf', knit_root_dir=location, intermediates_dir=locaiton)
