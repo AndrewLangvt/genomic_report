@@ -23,7 +23,6 @@ urlcolor: purplepeopleeater
 
 <!-- header content -->
 <!-- Uncomment the line of code below to include a header -->
-<!-- \fancyhead[L]{\raisebox{-0.25\height}{\includegraphics[height = 2.5cm]{path_to_your_header_here.png}}} -->
 \fancyhead[L]{\raisebox{-0.05\height}{\includegraphics[height = 2.5cm]{"/genomic_report/ma-DPH_logo.png"}}}
 \fancyhead[R]{\Huge MASPHL Genomic Clustering Report\\
 \Large SARS-COV-2 Sequencing\\
@@ -56,8 +55,6 @@ library(rmarkdown)
 library(knitr)
 library(kableExtra)
 library(formattable)
-
-date <- Sys.Date()
 
 ## Figure size
 
@@ -131,26 +128,24 @@ scale_font_size <- 2
 tip_font_size <- 2
 
 ```
-
-### COVID-19 Analysis
-
 The analysis of COVID-19 samples has been completed. These results must always be used in conjunction with epidemiological data when determining if isolates are epidemiologically linked. This analysis should not be used as a replacement for a thorough epidemiological investigation.
 
-### Sample Consensus Pass/Fail Status
-
+## Sample Sequence Pass/Fail Status
 ```{r, table1, echo = FALSE}
 
 #metrics <- read.table(status_table, header = TRUE, sep = '\t')
 
 # Separating out metrics file assembly info
-columns <- c("sample", "coverage_after_trimming", "meanbaseq_trim", "meanmapq_trim", "assembly_status")
+columns <- c("coverage_after_trimming", "meanbaseq_trim", "meanmapq_trim", "assembly_status")
 consensus_metrics <- status_table[, columns]
+colnames(consensus_metrics) <- c("Coverage", "Avg. Base Q", "Avg. Map Q", "Status")
 
-kable(consensus_metrics, 'latex', caption = 'Pass/Fail of Consensus Sequence Generation', booktabs = TRUE, linesep = '') %>%
-  kable_styling(latex_options = c('scale_down', 'hold_position'))
+kable(consensus_metrics, 'latex', booktabs = TRUE, linesep = '') %>%
+  kable_styling(latex_options = c('striped', 'full_width'), font_size = 9)
+
 ```
 
-### SNP Heatmap
+## SNP Heatmap
 
 The number of Single Nucleotide Polymorphisms (SNPs) between each sample is shown on the heatmap below.
 
@@ -244,7 +239,7 @@ write.table(snp_mat,"snp_distance_matrix.tsv",
 ```
 \newpage
 
-### Phylogenetic tree
+## Phylogenetic tree
 
 Using variation within the genome between samples (SNPs), we can estimate how related between isolates. We do this by determining if isolates share a similar common ancestor. Here we are looking for isolates that cluster together and share a small amount of horizontal distance on the tree.
 
@@ -273,7 +268,7 @@ geom_treescale(offset = scale_offset,
     x = 0) +
 
 # remove whitespace around plot
-theme(plot.margin = unit(c(0,0,0,0), "cm"))
+theme(plot.margin = unit(c(1,0,1,0), "cm"))
 
 # ggtree will often crop the figure too small; add to xmax to fix this
 # we've found the following function calculates a decent value to add to xmax:
@@ -296,4 +291,4 @@ The figures shown here were generated using sequence data processed with the clu
 
 Monroe cluster_analysis uses [Mafft](https://mafft.cbrc.jp/alignment/software/) to perform multiple-sequence alignment of all SARS-CoV-2 genomes provided. The resulting alignment fasta file is used to generate a pairwise-snp distance matrix with [snp-dists](https://github.com/tseemann/snp-dists) and a maximum-likelihood phylogeneitc tree with [IQ-Tree](http://www.iqtree.org/).
 
-Output from snp-dists and IQ-Tree are curated into a single pdf report using the [StaPH-B cluster-report-env](https://hub.docker.com/r/staphb/cluster-report-env)
+Output from snp-dists and IQ-Tree are curated into a single pdf report using a [MASPHL version](https://github.com/AndrewLangvt/genomic_report) of the [StaPH-B cluster-report-env](https://hub.docker.com/r/staphb/cluster-report-env).
