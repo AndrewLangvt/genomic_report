@@ -23,7 +23,7 @@ urlcolor: purplepeopleeater
 
 <!-- header content -->
 <!-- Uncomment the line of code below to include a header -->
-\fancyhead[L]{\raisebox{-0.05\height}{\includegraphics[height = 2.5cm]{"/genomic_report/ma-DPH_logo.png"}}}
+\fancyhead[L]{\raisebox{-0.05\height}{\includegraphics[height = 2.5cm]{"/ma-DPH_logo.png"}}}
 \fancyhead[R]{\Huge MASPHL Genomic Clustering Report\\
 \Large SARS-COV-2 Sequencing\\
 \Large `r paste(Sys.Date())`}
