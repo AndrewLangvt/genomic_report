@@ -14,10 +14,5 @@ status_table <- read.table(file_path_as_absolute(args[3]), header = T, check.nam
 report <- file_path_as_absolute(args[4])
 location <- args[5]
 
-# Check length of arguments
-if (args_len == 5) {
-    ar_df <- read.table(file_path_as_absolute(args[5]), header = T, stringsAsFactors = F)
-}
-
 # Render the report
 render(report, output_dir=location, output_file='report.pdf', knit_root_dir=location, intermediates_dir=location)
