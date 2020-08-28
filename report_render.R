@@ -15,4 +15,5 @@ report <- file_path_as_absolute(args[4])
 location <- args[5]
 
 # Render the report
-render(report, output_dir=location, output_file='report.pdf', knit_root_dir=location, intermediates_dir=location)
+#render(report, output_dir=location, output_file='report.pdf', knit_root_dir=location, intermediates_dir=location)
+render(report, output_file='report.pdf')
