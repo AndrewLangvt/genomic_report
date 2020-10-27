@@ -25,7 +25,6 @@ urlcolor: purplepeopleeater
 <!-- Uncomment the line of code below to include a header -->
 \fancyhead[L]{\raisebox{-0.05\height}{\includegraphics[height = 2.5cm]{"/ma-DPH_logo.png"}}}
 \fancyhead[R]{\Huge MASPHL Genomic Clustering Report\\
-\Large SARS-COV-2 Sequencing\\
 \Large `r paste(Sys.Date())`}
 
 <!-- create red header line -->
@@ -128,7 +127,7 @@ scale_font_size <- 2
 tip_font_size <- 2
 
 ```
-The analysis of COVID-19 samples has been completed. These results must always be used in conjunction with epidemiological data when determining if isolates are epidemiologically linked. This analysis should not be used as a replacement for a thorough epidemiological investigation.
+The analysis of your samples has been completed. These results must always be used in conjunction with epidemiological data when determining if isolates are epidemiologically linked. This analysis should not be used as a replacement for a thorough epidemiological investigation.
 
 ## Sample Sequence Pass/Fail Status
 ```{r, table1, echo = FALSE}
@@ -175,8 +174,8 @@ gtree <- ggtree(mpt, branch.length = "none")
 snp_mat <- snp_mat[c(mpt.ord),c(mpt.ord)]
 
 # switch to capture those instances when I have more than 35 samples, which throws off the dendogram/snp matrix formatting
-if(nrow(snp_mat) > 35) tree_offset <- 40
-if(nrow(snp_mat) > 35) row_offset <- -35
+if(nrow(snp_mat) > 35) tree_offset <- 30
+if(nrow(snp_mat) > 35) row_offset <- -29
 
 ```
 
@@ -289,6 +288,6 @@ ggsave('ML_tree.png', units = "in", width = 8.5, height = 10)
 
 The figures shown here were generated using sequence data processed with the cluster_analysis pipeline from the [Monroe workflow](https://github.com/StaPH-B/staphb_toolkit/tree/dev).
 
-Monroe cluster_analysis uses [Mafft](https://mafft.cbrc.jp/alignment/software/) to perform multiple-sequence alignment of all SARS-CoV-2 genomes provided. The resulting alignment fasta file is used to generate a pairwise-snp distance matrix with [snp-dists](https://github.com/tseemann/snp-dists) and a maximum-likelihood phylogeneitc tree with [IQ-Tree](http://www.iqtree.org/).
+Monroe cluster_analysis uses [Mafft](https://mafft.cbrc.jp/alignment/software/) to perform multiple-sequence alignment of all genomes provided. The resulting alignment fasta file is used to generate a pairwise-snp distance matrix with [snp-dists](https://github.com/tseemann/snp-dists) and a maximum-likelihood phylogeneitc tree with [IQ-Tree](http://www.iqtree.org/).
 
 Output from snp-dists and IQ-Tree are curated into a single pdf report using a [MASPHL version](https://github.com/AndrewLangvt/genomic_report) of the [StaPH-B cluster-report-env](https://hub.docker.com/r/staphb/cluster-report-env).
