@@ -1,0 +1,69 @@
+---
+output:
+  pdf_document:
+    latex_engine: xelatex
+header-includes:
+    - \usepackage{fancyhdr}
+    - \usepackage{fontspec}
+    - \usepackage{xcolor}
+    - \geometry{left = 0.5in,right = 0.5in}
+mainfont: Roboto
+sansfont: Roboto
+urlcolor: purplepeopleeater
+---
+<!-- define color and adjust lengths for header and footer-->
+\definecolor{purplepeopleeater}{RGB}{106,13,75}
+\addtolength{\headheight}{3.0cm}
+\addtolength{\topmargin}{-0.5in}
+\addtolength{\footskip}{-0.225in}
+
+<!-- % setup header -->
+\pagestyle{fancy}
+\fancyhf{}
+
+<!-- header content -->
+<!-- Uncomment the line of code below to include a header -->
+\fancyhead[L]{\raisebox{-0.05\height}{\includegraphics[height = 2.5cm]{"/ma-DPH_logo.png"}}}
+\fancyhead[R]{\Huge MASPHL Genomic Sequencing Run Report\\
+\Large `r paste(Sys.Date())`}
+
+<!-- create red header line -->
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\headrule}{\hbox to\headwidth{%
+    \color{purplepeopleeater}\leaders\hrule height \headrulewidth\hfill}}
+
+<!-- footer content -->
+\fancyfoot[C]{For research use only, not for clinical use.}
+\fancyfoot[R]{\thepage}
+
+<!-- create red footer line -->
+\renewcommand{\footrulewidth}{1pt}
+\renewcommand{\footrule}{\hbox to\headwidth{%
+    \color{purplepeopleeater}\leaders\hrule height \headrulewidth\hfill}}
+
+```{r include=FALSE}
+## Libraries
+library(knitr)
+library(kableExtra)
+## Figure size
+# get date of report generation
+date <- Sys.Date()
+# set figure size
+knitr::opts_chunk$set(out.width = "7.5in", out.height = "8in", fig.align = "left")
+# set seed for reproducibility
+set.seed(123)
+```
+
+The assembly of your sample genomes has been completed. Below are the sample IDs with corresponding metrics and pass/fail values.
+
+## Sample Sequence Pass/Fail Status
+```{r, table1, echo = FALSE}
+# Separating out metrics file assembly info
+columns <- c("coverage_after_trimming", "meanbaseq_trim", "meanmapq_trim", "assembly_status")
+status_table$Sample_ID <- rownames(status_table)
+consensus_metrics <- status_table[, c("Sample_ID", columns)]
+colnames(consensus_metrics) <- c("Sample IDs", "Coverage", "Avg. Base Q", "Avg. Map Q", "Status")
+rownames(consensus_metrics) <- NULL
+kable(consensus_metrics, 'latex', booktabs = TRUE, linesep = '') %>%
+  kable_styling(latex_options = c('striped', 'full_width'), font_size = 9)
+```
