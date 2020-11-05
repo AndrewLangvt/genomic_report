@@ -174,8 +174,8 @@ gtree <- ggtree(mpt, branch.length = "none")
 snp_mat <- snp_mat[c(mpt.ord),c(mpt.ord)]
 
 # switch to capture those instances when I have more than 35 samples, which throws off the dendogram/snp matrix formatting
-if(nrow(snp_mat) > 35) tree_offset <- 30
-if(nrow(snp_mat) > 35) row_offset <- -29
+if(nrow(snp_mat) > 32) tree_offset <- 30
+if(nrow(snp_mat) > 32) row_offset <- -29
 
 ```
 
