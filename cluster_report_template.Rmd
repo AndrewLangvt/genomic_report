@@ -143,6 +143,7 @@ kable(consensus_metrics, 'latex', booktabs = TRUE, linesep = '') %>%
   kable_styling(latex_options = c('striped', 'full_width'), font_size = 9)
 
 ```
+\newpage
 
 ## SNP Heatmap
 
