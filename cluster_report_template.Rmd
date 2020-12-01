@@ -33,7 +33,7 @@ urlcolor: purplepeopleeater
     \color{purplepeopleeater}\leaders\hrule height \headrulewidth\hfill}}
 
 <!-- footer content -->
-\fancyfoot[C]{For research use only, not for clinical use.}
+\fancyfoot[C]{For surveillance use only, not for clinical or research use.}
 \fancyfoot[R]{\thepage}
 
 <!-- create red footer line -->
