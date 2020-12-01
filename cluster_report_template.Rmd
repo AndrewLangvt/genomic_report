@@ -127,7 +127,7 @@ scale_font_size <- 2
 tip_font_size <- 2
 
 ```
-The analysis of your samples has been completed. These results must always be used in conjunction with epidemiological data when determining if isolates are epidemiologically linked. This analysis should not be used as a replacement for a thorough epidemiological investigation.
+The analysis of your samples has been completed. The sample identifiers included on this report should be treated as patient data for privacy purposes. Additionally, the results of this report are to be used solely for surveillance purposes and should not be used to inform patient care. These results must always be used in conjunction with epidemiological data when determining if isolates are epidemiologically linked. This analysis should not be used as a replacement for a thorough epidemiological investigation.
 
 ## Sample Sequence Pass/Fail Status
 ```{r, table1, echo = FALSE}
