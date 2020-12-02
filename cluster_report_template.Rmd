@@ -134,9 +134,9 @@ The analysis of your samples has been completed. The sample identifiers included
 #metrics <- read.table(status_table, header = TRUE, sep = '\t')
 
 # Separating out metrics file assembly info
-columns <- c("coverage_after_trimming", "meanbaseq_trim", "meanmapq_trim", "assembly_status")
-consensus_metrics <- status_table[, columns]
-colnames(consensus_metrics) <- c("Coverage", "Avg. Base Q", "Avg. Map Q", "Status")
+consensus_metrics <- status_table
+consensus_metrics <- cbind(rownames(consensus_metrics), data.frame(consensus_metrics, row.names=NULL))
+colnames(consensus_metrics) <- c("Samplename", "Status")
 
 kable(consensus_metrics, 'latex', booktabs = TRUE, linesep = '') %>%
   kable_styling(latex_options = c('striped', 'full_width'), font_size = 9)
