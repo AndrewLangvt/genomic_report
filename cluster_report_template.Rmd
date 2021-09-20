@@ -23,7 +23,7 @@ urlcolor: purplepeopleeater
 
 <!-- header content -->
 <!-- Uncomment the line of code below to include a header -->
-\fancyhead[R]{\Huge Genomic Analysis\\
+\fancyhead[R]{\Huge MASPHL Genomic Analysis\\
 \Large `r paste(Sys.Date())`}
 
 <!-- create red header line -->
@@ -51,8 +51,6 @@ library(viridis)
 library(tidyverse)
 library(rmarkdown)
 library(knitr)
-library(kableExtra)
-library(formattable)
 
 ## Figure size
 
@@ -81,7 +79,7 @@ axis_font_size <- 2.25
 cell_font_size <- 2.25
 
 # tree offset from heatmap
-tree_offset <- 30
+tree_offset <- 25
 
 # offset of column names from heatmap; should be negative
 col_offset <- -2.5
@@ -120,29 +118,15 @@ x_nudge <- 0
 scale_offset <- 0.1
 
 # tree scale font size
-scale_font_size <- 2
+scale_font_size <- 3
 
 # tip label font size
-tip_font_size <- 2
+tip_font_size <- 3
 
 ```
-The analysis of your samples has been completed. The sample identifiers included on this analysis should be treated as patient data for privacy purposes. Additionally, the results of this analysis are to be used solely for surveillance purposes and should not be used to inform patient care. These genomic data must always be used in conjunction with epidemiological data when determining if isolates are epidemiologically linked. This analysis should not be used as a replacement for a thorough epidemiological investigation.
+This document may contain confidential information. If you have received this in error and are not the intended recipient, please notify the sender by telephone or by separate email.
 
-## Sample Sequence Pass/Fail Status
-```{r, table1, echo = FALSE}
-
-#metrics <- read.table(status_table, header = TRUE, sep = '\t')
-
-# Separating out metrics file assembly info
-consensus_metrics <- status_table
-consensus_metrics <- cbind(rownames(consensus_metrics), data.frame(consensus_metrics, row.names=NULL))
-colnames(consensus_metrics) <- c("Samplename", "Status")
-
-kable(consensus_metrics, 'latex', booktabs = TRUE, linesep = '') %>%
-  kable_styling(latex_options = c('striped', 'full_width'), font_size = 9)
-
-```
-\newpage
+The analysis of your samples has been completed. The sample identifiers included on this analysis should be treated as patient data for privacy purposes. Additionally, the results of this analysis are for outbreak investigations or epidemiological purposes only, and are not to be used for diagnosis or treatment. These genomic data must always be used in conjunction with epidemiological data when determining if isolates are epidemiologically linked. This analysis should not be used as a replacement for a thorough epidemiological investigation.
 
 ## SNP Heatmap
 
@@ -179,9 +163,7 @@ if(nrow(snp_mat) > 32) row_offset <- -29
 
 ```
 
-```{r plot-tree-and-heatmap, echo = FALSE, message = FALSE, warning = FALSE}
-
-### Split isolate IDs by delimiter "-" and "_" (for >= 20 isolates)
+```{r plot-tree-and-heatmap, echo = FALSE, message = FALSE, warning = FALSE, fig.width = 8}
 
 # ggtree will often crop the figure too small; subtract from ymin and add to ymax to fix this
 ymin <- min(gtree$data$y) - 5
@@ -237,12 +219,11 @@ write.table(snp_mat,"snp_distance_matrix.tsv",
             quote = F)
 ```
 \newpage
-
 ## Phylogenetic tree
 
 Using variation within the genome between samples (SNPs), we can estimate relatedness between isolates. We do this by determining if isolates share a similar common ancestor. Here we are looking for isolates that cluster together and share a small amount of horizontal distance on the tree.
 
-```{r plot-tree, echo = FALSE, message = FALSE, warning = FALSE}
+```{r plot-tree, echo = FALSE, message = FALSE, warning = FALSE, fig.height = 3.75}
 
 # This block plots the midpint-rooted tree with bootstrap values
 
@@ -281,11 +262,10 @@ xmin <- 0
 
 # set x limits and plot tree
 gtree + xlim(xmin,xmax)
+#gtree
 ggsave('ML_tree.png', units = "in", width = 8.5, height = 10)
 ```
 
 ### Methods
 
-This workflow is based upon the cluster analysis pipeline from the [Monroe workflow](https://github.com/StaPH-B/staphb_toolkit/tree/dev).
-
-This workflow uses [Mafft](https://mafft.cbrc.jp/alignment/software/) to perform multiple-sequence alignment of all genomes provided. The resulting alignment fasta file is used to generate a pairwise-snp distance matrix with [snp-dists](https://github.com/tseemann/snp-dists) and a maximum-likelihood phylogeneitc tree with [IQ-Tree](http://www.iqtree.org/). Output from snp-dists and IQ-Tree are curated into a single pdf report.
+The figures shown here were generated using sequence data processed with the MASPHL Genomic Analysis v1.0 workflow, which is based upon the cluster analysis pipeline from the [Monroe workflow](https://github.com/StaPH-B/staphb_toolkit/tree/dev). The workflow used here calls [Mafft](https://mafft.cbrc.jp/alignment/software/) to perform multiple-sequence alignment of all genomes provided and generates a pairwise-snp distance matrix with [snp-dists](https://github.com/tseemann/snp-dists) and a maximum-likelihood phylogeneitc tree with [IQ-Tree](http://www.iqtree.org/). Output from snp-dists and IQ-Tree are curated into a single pdf report.
